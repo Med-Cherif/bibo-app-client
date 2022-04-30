@@ -1,0 +1,15 @@
+.auth-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    padding: 25px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+.input-fluid {
+    width: 100%;
+}

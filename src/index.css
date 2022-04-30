@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body a {
+  text-decoration: none;
+}
+
+/* full height */
+.fh {
+  min-height: 100vh;
+}
+
+.pd {
+  padding: 50px;
+}
+
+.form-control > :first-child {
+  width: 100%;
+}
+
+@media (max-width: 575px) {
+  .pd {
+    padding: 25px;
+  }
+}
+
+.App {
+  overflow-x: hidden
+}
+
+.skelton {
+  width: 50px;
+  height: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #555;
+  border-radius: 50%;
+  animation: skelton 1s infinite linear;
+}
+
+@keyframes skelton {
+  0% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.2;
+  }
+}
+
+@media (max-width: 300px) {
+  .App {
+    overflow-x: visible
+  }
+  
+}
