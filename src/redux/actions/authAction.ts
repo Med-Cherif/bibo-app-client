@@ -9,7 +9,6 @@ const errorHandling = (error: any) => {
 
 export const signupAction = (signupData: api.SignupData, naviagte: NavigateFunction, setSubmitting: (isSubmitting: boolean) => void) => async (dispatch: AppDispatch) => {
     dispatch(actions.loading("auth-loading"))
-    alert(process.env.REACT_APP_API_URL);
     try {
         const { data } = await api.signup(signupData)
         dispatch(actions.authSuccess({ accessToken: data.accessToken, refreshToken: data.refreshToken }))
