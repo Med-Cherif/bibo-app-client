@@ -29,7 +29,9 @@ const ProfileImageSettingContainer = styled('div')({
 })
 
 const AvatarBox = styled('div')({
-    cursor: 'pointer'
+    cursor: 'pointer',
+    width: '100%',
+    height: '100%'
 })
 
 // currentPassword, newPassword, newConfirmingPassword
@@ -85,7 +87,7 @@ const SettingsScreen = () => {
                         accept="image/*"
                     />
                     <AvatarBox>
-                        <Avatar src={`${server}/${userData!.picture}`} />
+                        <Avatar sx={{ width: '100%', height: '100%' }} src={`${server}/${userData!.picture}`} />
                     </AvatarBox>
                 </ProfileImageSettingContainer>
                 <GridContainer mb={2} container spacing={2}>
