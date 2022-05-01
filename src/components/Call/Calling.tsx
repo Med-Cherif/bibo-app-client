@@ -21,7 +21,7 @@ const Calling = () => {
     useEffect(() => {
         let timeout = setTimeout(() => {
             endCall(calling.userID!);
-        }, 10 * 1000)
+        }, 30 * 1000)
 
         return () => {
             clearTimeout(timeout)
