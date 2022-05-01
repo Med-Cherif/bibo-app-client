@@ -81,7 +81,11 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     function onTrackEvent(e: RTCTrackEvent) {
-        remoteStream.current= e.streams[0]
+        alert('track event');
+        e.streams[0].getTracks().forEach((track) => {
+            alert(track.kind)
+        })
+        remoteStream.current = e.streams[0];
     }
 
     function onIceCandidateEvent (userID: string) {
