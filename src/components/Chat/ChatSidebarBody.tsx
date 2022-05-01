@@ -4,6 +4,7 @@ import { RootState } from "../../redux/store"
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { useEffect } from "react"
 import { getChatsAction } from "../../redux/actions/chatAction"
+import API_URL from "../../config"
 
 const BoxStyled = styled(Box)({
     overflow: 'auto',
@@ -42,7 +43,7 @@ const ChatSidebarBody = ({ setSearchParams, chats }: any) => {
                                         setSearchParams({ user: chat.user._id })
                                     }}>
                                         <ListItemAvatar>
-                                            <Avatar src={`http://localhost:5000${chat.user.picture}`} alt={chat.user.username} />
+                                            <Avatar src={`${API_URL}${chat.user.picture}`} alt={chat.user.username} />
                                         </ListItemAvatar>
                                         <ListItemText 
                                             primary={chat.user.username}

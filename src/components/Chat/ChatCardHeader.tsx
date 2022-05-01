@@ -8,6 +8,7 @@ import {actions as chatActions} from "../../redux/slices/chatSlice";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom"
 import { useCallState } from "../../context/CallContext"
+import API_URL from "../../config"
 
 interface IProps {
     handleClosingChat: (cb: () => void) => void;
@@ -46,7 +47,7 @@ const ChatCardHeader = ({ handleClosingChat }: IProps) => {
                         cursor: 'pointer'
                     }}
                     onClick={() => navigate(`/profile/${chat?.user?._id}`)} 
-                    src={`http://localhost:5000${chat?.user?.picture}`} 
+                    src={`${API_URL}/${chat?.user?.picture}`} 
                 />
             }
             action={

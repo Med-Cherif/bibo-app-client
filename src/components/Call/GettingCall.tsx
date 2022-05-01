@@ -6,6 +6,7 @@ import { IconWrapper } from "./Call"
 import EndCallButton from './EndCallButton';
 import { RootState } from '../../redux/store';
 import { useCallState } from '../../context/CallContext';
+import API_URL from "../../config"
 
 const PaperStyled = styled(Paper)(({
     width: '100%',
@@ -30,7 +31,7 @@ const GettingCall = () => {
         <PaperStyled elevation={0}>
             <Stack spacing={2} alignItems="center">
                 <Typography variant="h5" component="h2">Incoming {receivingCall.type} call</Typography>
-                <Avatar alt='User' src={`http://localhost:5000/${caller!.picture}`} sx={{ width: '180px', height: '180px' }} />
+                <Avatar alt='User' src={`${API_URL}/${caller!.picture}`} sx={{ width: '180px', height: '180px' }} />
                 <Box>
                     <Typography align="center" variant="body1" component="h4">{caller!.username}</Typography>
                     <Typography align="center" variant="body2" component="h6">{caller!.name}</Typography>
