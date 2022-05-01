@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState: any = {
     chat: null,
     chats: [],
-    requestedChats: []
 }
 
 const chatSlice = createSlice({
@@ -13,8 +12,8 @@ const chatSlice = createSlice({
         getChats: (state, action) => {
             state.chats = action.payload;
         },
-        getRequestedChats: (state, action) => {
-            state.requestedChats = action.payload;
+        getNewChat: (state, action) => {
+            state.chats = [action.payload, ...state.chats]
         },
         getChat: (state, action) => {
             state.chat = action.payload;
@@ -26,20 +25,6 @@ const chatSlice = createSlice({
                 _id: action.payload._id,
                 messages: [...state.chat.messages, action.payload.message]
             };
-        },
-        acceptChat: (state, action) => {
-            const chatId = action.payload;
-            const chat = state.requestedChats.find((chat: any) => {
-                return chat._id === chatId
-            });
-            state.requestedChats = state.requestedChats.filter((chat: any) => {
-                return chat._id === chatId
-            });
-            state.chats = [chat, ...state.chats];
-            state.chat = { ...state.chat, hasPowers: true }
-        },
-        getNewRequestedChat: (state, action) => {
-            state.requestedChats = [action.payload, ...state.requestedChats];
         },
         receiveMessage: (state, action) => {
             if (action.payload.chatId === state.chat._id) {

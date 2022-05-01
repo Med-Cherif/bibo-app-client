@@ -44,8 +44,6 @@ const SearchIconStyled = styled(SearchIcon)({
 })
 
 const ChatSidebar = ({ setSearchParams }: any) => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { chats } = useSelector((state: RootState) => state.chat);
     const [filteredChats, setFilteredChats] = useState([]);
 
@@ -74,15 +72,6 @@ const ChatSidebar = ({ setSearchParams }: any) => {
                 </SearchContainer>
             </BoxHeader>
             <Divider sx={{ marginTop: '20px' }} />
-            <Button 
-                disableRipple 
-                disableElevation 
-                color="primary" 
-                sx={{ padding: '6px 18px', fontSize: 15 }} 
-                onClick={() => navigate('/messages/requests')}
-            >
-                Requests messages
-            </Button>
             <ChatSidebarBody chats={filteredChats} setSearchParams={setSearchParams} />
         </BoxStyled>
     )

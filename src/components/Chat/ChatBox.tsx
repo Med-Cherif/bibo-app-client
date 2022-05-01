@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, styled, Card, Divider } from "@mui/material"
 import ChatCardHeader from "./ChatCardHeader";
 import ChatCardContent from "./ChatCardContent";
-import ChatCardFooter from "./ChatCardFooter";
 import { handleChat, handleMessage } from "../../redux/actions/chatAction"
 import { useGlobalState } from "../../context/AppContext";
 import { RootState } from "../../redux/store";
 import { actions as chatActions } from "../../redux/slices/chatSlice"
+import ChatInput from "./ChatInput";
 
 const BoxStyled = styled(Box)(({ theme }) => ({
     width: '100%',
@@ -39,7 +39,7 @@ const ChatBox = ({ searchParams, handleClosingChat, onWriteMessageState }: IProp
     useEffect(() => {
         if (searchParams.get('user') && userData) {
             handleChat(socket).emitting({ starterId: userData._id, userId: searchParams.get('user')! });
-            handleChat(socket, dispatch).listeningExixtsChat(userData!._id);
+            handleChat(socket, dispatch).listeningExixtsChat();
             handleChat(socket, dispatch).listeningNewChat();
         }
     }, [searchParams])
@@ -54,7 +54,7 @@ const ChatBox = ({ searchParams, handleClosingChat, onWriteMessageState }: IProp
     }, [searchParams, chat, onWriteMessageState])
 
     useEffect(() => {
-        if (chat && chat?.hasPowers) {
+        if (chat) {
             if (chat?.messages[chat?.messages?.length - 1]?.sender !== myID) {
                 handleMessage(socket).seenMessage(chat);
 
@@ -75,7 +75,7 @@ const ChatBox = ({ searchParams, handleClosingChat, onWriteMessageState }: IProp
                         <ChatCardHeader handleClosingChat={handleClosingChat} />
                         <Divider sx={{ marginTop: '6px' }} />
                         <ChatCardContent onWriteMessageState={onWriteMessageState} messagesContainerRef={messagesContainerRef} />
-                        <ChatCardFooter hasPowers={chat.hasPowers} />
+                        <ChatInput />
                     </Card>
                 )
             }

@@ -15,7 +15,6 @@ import PostScreen from "./screens/PostScreen";
 import NotificationsScreen from "./screens/NotificationsScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import AuthError from "./components/public/AuthError";
-import ChatRequests from "./screens/ChatRequests";
 import CallProvider from "./context/CallContext";
 import Call from "./components/Call/Call";
 import Warning from "./components/Warning";
@@ -55,17 +54,6 @@ function App() {
                 </ScreenContainer>
               </RequiredAuth>} 
             />
-
-            <Route 
-              path="messages/requests"
-              element={
-                <RequiredAuth>
-                  <ScreenContainer hidePostCreator>
-                    <ChatRequests />
-                </ScreenContainer>
-              </RequiredAuth>} 
-            />
-              
             
             <Route path="posts/:postId" element={
               <RequiredAuth>

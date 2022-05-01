@@ -36,42 +36,6 @@ export const getChatsAction = () => async (dispatch: AppDispatch, getState: () =
     }
 }
 
-export const getRequestedChatsAction = () => async (dispatch: AppDispatch, getState: () => RootState) => {
-    const { auth: { userData, accessToken } } = getState();
-
-    const userId = userData?._id
-
-    if (userId && accessToken) {
-        let result: any = []
-        try {
-            const { data: { chats } } = await apis.getRequestedChats(userId, accessToken);
-            Array.prototype.forEach.call(chats, function(chat) {
-                const res = chatResponse(chat, userData!._id);
-                result.push(res);
-            });
-            dispatch(actions.getRequestedChats(result));
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    return false;
-
-}
-
-export const acceptChatAction = () => async (dispatch: AppDispatch, getState: () => RootState) => {
-    const { auth, chat } = getState()
-    const chatId = chat?.chat?._id;
-    if (chatId) {
-        try {
-            await apis.acceptChat(chatId, auth.accessToken!);
-            dispatch(actions.acceptChat(chatId))
-        } catch (error) {
-            console.log(error);
-        }
-    }
-}
-
 export const handleChat = (socket: Socket, dispatch?: Dispatch) => {
     return {
         emitting: ({starterId, userId}: {starterId: string, userId: string}) => socket.emit('start chat', { starterId, userId }, ({ error }: any) => {
@@ -81,13 +45,11 @@ export const handleChat = (socket: Socket, dispatch?: Dispatch) => {
         }),
 
         // if there are already messages in the conversation
-        listeningExixtsChat: (myID: string) => socket.on('start exixts chat', ({ user, messages, accepted }) => {
+        listeningExixtsChat: () => socket.on('start exixts chat', ({ user, messages, accepted }) => {
             let conversation = {
                 _id: messages[0].chatId,
                 user,
                 messages,
-                hasPowers: (accepted.receiver !== myID) || (accepted.isAccepted && accepted.receiver === myID) ? true : false,
-                
             }
             if (dispatch) {
                 dispatch(actions.getChat(conversation))
@@ -100,7 +62,6 @@ export const handleChat = (socket: Socket, dispatch?: Dispatch) => {
                 _id: null,
                 user,
                 messages: [],
-                hasPowers: true
             }
             if (dispatch) {
                 dispatch(actions.getChat(newConversation))
@@ -110,7 +71,7 @@ export const handleChat = (socket: Socket, dispatch?: Dispatch) => {
         receivingNewRequestedChat: (myID: string) => socket.on('receiver new chat', (chat) => {
             if (dispatch) {
                 const result = chatResponse(chat, myID);
-                dispatch(actions.getNewRequestedChat(result))
+                dispatch(actions.getNewChat(result))
             }
         })
     }

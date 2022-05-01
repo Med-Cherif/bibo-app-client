@@ -19,17 +19,17 @@ interface CallStateContext  {
 }
 
 const CallContext = createContext({})
-
-const rtcConfig: RTCConfiguration = {
+const configuration: RTCConfiguration = {
     iceServers: [
-        { urls: 'stun:stun.l.google.com:19302' },
-        {
-            urls: 'turn:numb.viagenie.ca',
-            credential: 'muazkh',
-            username: 'webrtc@live.com'
-        },
-    ]
-}
+      {
+        urls: [
+          'stun:stun1.l.google.com:19302',
+          'stun:stun2.l.google.com:19302',
+        ],
+      },
+    ],
+    iceCandidatePoolSize: 10,
+  };
 
 const CallProvider = ({ children }: { children: React.ReactNode }) => {
 
@@ -37,7 +37,6 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
     const dispatch = useDispatch();
 
     const { userData } = useSelector((state: RootState) => state.auth)
-    const { isAudioCall, isVideoCall } = useSelector((state: RootState) => state.call)
 
     const myAudioRef = useRef<HTMLAudioElement>(null)
     const remoteAudioRef = useRef<HTMLAudioElement>(null)
@@ -50,7 +49,7 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
     
     function createPeer(userID: string, type: 'audio' | 'video') {
-        const peer = new RTCPeerConnection(rtcConfig); 
+        const peer = new RTCPeerConnection(configuration); 
         peer.ontrack = onTrackEvent;
         peer.onicecandidate = onIceCandidateEvent(userID);
         peer.onnegotiationneeded = () => onNegotiationNeeddedEvent(userID, type);
@@ -218,7 +217,7 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
             const stream = await navigator.mediaDevices.getUserMedia(constraints);
             localStream.current = stream;
             peerConnection.current = createPeer(userID, type);
-            localStream.current!.getTracks().forEach((track) => peerConnection.current!.addTrack(track, localStream.current!));
+            localStream.current!.getTracks().forEach((track) => peerConnection.current!.addTrack(track, stream));
         } catch (error) {
             console.log(error);
         }

@@ -5,7 +5,7 @@ import Sidebar from "../components/Sidebar/Sidebar"
 import ChatSidebar from "../components/Chat/ChatSidebar";
 import Navbar from "../components/Navbar/Navbar";
 import ChatBox from "../components/Chat/ChatBox";
-import { handleMessage } from "../redux/actions/chatAction"
+import { handleChat, handleMessage } from "../redux/actions/chatAction"
 import { RootState } from "../redux/store"
 import { useGlobalState } from "../context/AppContext";
 import { useDispatch, useSelector } from "react-redux";
@@ -69,7 +69,7 @@ const Chat = () => {
         }
     }
 
-    // in mobile screen
+    // for mobile screen
     const handleClosingChat = (resetChat: () => void) => {
         if (boxGridRef.current) {
             boxGridRef.current.style.transform = 'translateX(0%)'
@@ -91,10 +91,10 @@ const Chat = () => {
 
     useEffect(() => {
         handleMessage(socket, dispatch).listeningNewChatMessage(userData!._id);
+        handleChat(socket, dispatch).receivingNewRequestedChat(userData!._id)
     }, [])
 
     useEffect(() => {
-        // const x = [on end write message, on write message]
         socket.on('on write message', (chatID) => {
             setOnWriteMessageState((prev) => {
                 return { ...prev, [chatID]: true }
