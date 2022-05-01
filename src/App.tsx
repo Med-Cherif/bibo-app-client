@@ -1,4 +1,4 @@
-import { Routes, Route} from "react-router-dom"
+import { Routes, Route, Link} from "react-router-dom"
 import RequiredAuth from "./components/routes/RequiredAuth";
 import RequiredNotAuth from "./components/routes/RequiredNotAuth";
 import Register from "./screens/Register"
@@ -88,6 +88,14 @@ function App() {
                     <SettingsScreen />
                   </ScreenContainer>
                 </RequiredAuth>
+              }
+            />
+            <Route 
+              path="*"
+              element={
+                <div>
+                    Page not found <Link to="/">Go to home page</Link>
+                </div>
               }
             />
           </Routes>
