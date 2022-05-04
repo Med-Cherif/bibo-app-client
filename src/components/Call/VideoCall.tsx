@@ -82,10 +82,8 @@ const VideoCall = () => {
     useEffect(() => {
         
         if (remoteStream.current && remoteVideoRef.current) {
-            remoteStream.current.getTracks().forEach((track) => {
-                alert(`${track.kind} ${track.enabled}`);
-            })
             remoteVideoRef.current.srcObject = remoteStream.current;
+            alert(remoteVideoRef.current.srcObject)
         }
         if (localStream.current && localVideoRef.current) {
             localVideoRef.current.srcObject = localStream.current;
