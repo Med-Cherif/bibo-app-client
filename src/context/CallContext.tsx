@@ -83,7 +83,10 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
 
     function onTrackEvent(e: RTCTrackEvent) {
         if (remoteStream.current) {
-            e.streams[0].getTracks().forEach((track) => remoteStream.current!.addTrack(track));
+            e.streams[0].getTracks().forEach((track) => {
+                alert(`from track event ${track.readyState} ${track.kind}`)
+                remoteStream.current!.addTrack(track)
+            });
         }
     }
 
