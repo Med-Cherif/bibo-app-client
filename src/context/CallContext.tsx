@@ -68,7 +68,7 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
         const peer = new RTCPeerConnection(configuration); 
         peer.ontrack = onTrackEvent;
         peer.onicecandidate = onIceCandidateEvent(userID);
-        // peer.onnegotiationneeded = () => onNegotiationNeeddedEvent(userID, type);
+        peer.onnegotiationneeded = () => onNegotiationNeeddedEvent(userID, type);
         return peer;
     }
 
