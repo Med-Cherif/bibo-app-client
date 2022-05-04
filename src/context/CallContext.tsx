@@ -68,7 +68,7 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
         const peer = new RTCPeerConnection(configuration); 
         peer.ontrack = onTrackEvent;
         peer.onicecandidate = onIceCandidateEvent(userID);
-        peer.onnegotiationneeded = () => onNegotiationNeeddedEvent(userID, type);
+        // peer.onnegotiationneeded = () => onNegotiationNeeddedEvent(userID, type);
         return peer;
     }
 
@@ -188,11 +188,11 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
             localStream.current = stream;
             remoteStream.current = new MediaStream();
             peerConnection.current = createPeer(userID, type);
-            const sessionDescription = new RTCSessionDescription(sdp);
-            await peerConnection.current.setRemoteDescription(sessionDescription);
             stream.getTracks().forEach((track) => {
                 peerConnection.current!.addTrack(track, stream)
             })
+            const sessionDescription = new RTCSessionDescription(sdp);
+            await peerConnection.current.setRemoteDescription(sessionDescription);
             const answer = await peerConnection.current.createAnswer();
             await peerConnection.current.setLocalDescription(answer)
 
