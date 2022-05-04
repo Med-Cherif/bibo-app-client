@@ -107,7 +107,6 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
     function onIceCandidateEvent (userID: string) {
         return (e: RTCPeerConnectionIceEvent) => {
             if (e.candidate) {
-                alert('sending candidate')
                 socket.emit('ice-candidate', {
                     userID,
                     candidate: e.candidate.candidate,
@@ -260,7 +259,6 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
 
         socket.on('ice-candidate', async ({ candidate, sdpMLineIndex, sdpMid }) => {
             if (peerConnection.current) {
-                alert('getting candidate')
                 const rtcIceCandidate = new RTCIceCandidate({ candidate, sdpMLineIndex, sdpMid });
                 await peerConnection.current.addIceCandidate(rtcIceCandidate)
             }
