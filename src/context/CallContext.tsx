@@ -184,12 +184,12 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
         }
 
         try {
-            peerConnection.current = createPeer(userID, type);
-            const sessionDescription = new RTCSessionDescription(sdp);
-            await peerConnection.current.setRemoteDescription(sessionDescription);
             const stream = await navigator.mediaDevices.getUserMedia(constraints);
             localStream.current = stream;
             remoteStream.current = new MediaStream();
+            peerConnection.current = createPeer(userID, type);
+            const sessionDescription = new RTCSessionDescription(sdp);
+            await peerConnection.current.setRemoteDescription(sessionDescription);
             stream.getTracks().forEach((track) => {
                 peerConnection.current!.addTrack(track, stream)
             })
