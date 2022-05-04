@@ -81,11 +81,9 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     function onTrackEvent(e: RTCTrackEvent) {
-        alert('track event');
-        e.streams[0].getTracks().forEach((track) => {
-            alert(track.kind)
-        })
-        remoteStream.current = e.streams[0];
+        if (remoteStream.current) {
+            e.streams[0].getTracks().forEach((track) => remoteStream.current!.addTrack(track));
+        }
     }
 
     function onIceCandidateEvent (userID: string) {
@@ -170,10 +168,14 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia(constraints);
             localStream.current = stream;
+            remoteStream.current = new MediaStream();
             peerConnection.current = createPeer(userID, type);
             const sessionDescription = new RTCSessionDescription(sdp);
             await peerConnection.current.setRemoteDescription(sessionDescription);
-            localStream.current.getTracks().forEach((track) => peerConnection.current!.addTrack(track, localStream.current!))
+            stream.getTracks().forEach((track) => {
+                alert(`from accept call ${track.kind}`)
+                peerConnection.current!.addTrack(track, stream)
+            })
             const answer = await peerConnection.current.createAnswer();
             await peerConnection.current.setLocalDescription(answer)
 
@@ -220,8 +222,12 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia(constraints);
             localStream.current = stream;
+            remoteStream.current = new MediaStream();
             peerConnection.current = createPeer(userID, type);
-            localStream.current!.getTracks().forEach((track) => peerConnection.current!.addTrack(track, stream));
+            stream.getTracks().forEach((track) => {
+                alert(`from make call ${track.kind}`)
+                peerConnection.current!.addTrack(track, stream)
+            });
         } catch (error) {
             console.log(error);
         }
