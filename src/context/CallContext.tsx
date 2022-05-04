@@ -107,6 +107,7 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
     function onIceCandidateEvent (userID: string) {
         return (e: RTCPeerConnectionIceEvent) => {
             if (e.candidate) {
+                alert('sending candidate')
                 socket.emit('ice-candidate', {
                     userID,
                     candidate: e.candidate.candidate,
@@ -184,12 +185,12 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
         }
 
         try {
-            const stream = await navigator.mediaDevices.getUserMedia(constraints);
-            localStream.current = stream;
-            remoteStream.current = new MediaStream();
             peerConnection.current = createPeer(userID, type);
             const sessionDescription = new RTCSessionDescription(sdp);
             await peerConnection.current.setRemoteDescription(sessionDescription);
+            const stream = await navigator.mediaDevices.getUserMedia(constraints);
+            localStream.current = stream;
+            remoteStream.current = new MediaStream();
             stream.getTracks().forEach((track) => {
                 peerConnection.current!.addTrack(track, stream)
             })
@@ -257,10 +258,11 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
 
         socket.on('answer', handlingAnswer);
 
-        socket.on('ice-candidate', ({ candidate, sdpMLineIndex, sdpMid }) => {
+        socket.on('ice-candidate', async ({ candidate, sdpMLineIndex, sdpMid }) => {
             if (peerConnection.current) {
+                alert('getting candidate')
                 const rtcIceCandidate = new RTCIceCandidate({ candidate, sdpMLineIndex, sdpMid });
-                peerConnection.current.addIceCandidate(rtcIceCandidate)
+                await peerConnection.current.addIceCandidate(rtcIceCandidate)
             }
         })
     }, [])
