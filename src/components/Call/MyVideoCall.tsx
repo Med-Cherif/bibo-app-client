@@ -1,5 +1,5 @@
 import { styled } from '@mui/material';
-import React, { useRef } from 'react';
+import React from 'react';
 
 const MyVideo = styled('video')({
     position: 'absolute',
@@ -32,6 +32,7 @@ const MyVideoCall = ({ myVideoRef }: IProps) => {
     const move = (e: React.MouseEvent<HTMLVideoElement, MouseEvent>) => {
         e.preventDefault();
         if (isSliding) {
+            
             const video = myVideoRef.current!;
             let xPos2 = xPos - e.clientX;
             let yPos2 = yPos - e.clientY;

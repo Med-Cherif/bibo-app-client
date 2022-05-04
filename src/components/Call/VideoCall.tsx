@@ -80,7 +80,9 @@ const VideoCall = () => {
     }
 
     useEffect(() => {
+        
         if (remoteStream.current && remoteVideoRef.current) {
+            alert('happened')
             remoteVideoRef.current.srcObject = remoteStream.current;
         }
         if (localStream.current && localVideoRef.current) {

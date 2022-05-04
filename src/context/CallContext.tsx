@@ -28,6 +28,21 @@ const configuration: RTCConfiguration = {
           'stun:global.stun.twilio.com:3478?transport=udp',
         ],
       },
+      {
+        urls: "turn:openrelay.metered.ca:80",
+        username: "openrelayproject",
+        credential: "openrelayproject",
+      },
+      {
+        urls: "turn:openrelay.metered.ca:443",
+        username: "openrelayproject",
+        credential: "openrelayproject",
+      },
+      {
+        urls: "turn:openrelay.metered.ca:443?transport=tcp",
+        username: "openrelayproject",
+        credential: "openrelayproject",
+      },
     ],
     iceCandidatePoolSize: 10,
   };
@@ -59,7 +74,7 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
 
     async function onNegotiationNeeddedEvent(userID: string, type: 'video' | 'audio') {
         const sdp = await peerConnection.current!.createOffer();
-        peerConnection.current!.setLocalDescription(sdp);
+        await peerConnection.current!.setLocalDescription(sdp);
         
         const payload = {
             to: userID,
@@ -84,7 +99,6 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
     function onTrackEvent(e: RTCTrackEvent) {
         if (remoteStream.current) {
             e.streams[0].getTracks().forEach((track) => {
-                alert(`from track event ${track.readyState} ${track.kind}`)
                 remoteStream.current!.addTrack(track)
             });
         }
@@ -177,7 +191,6 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
             const sessionDescription = new RTCSessionDescription(sdp);
             await peerConnection.current.setRemoteDescription(sessionDescription);
             stream.getTracks().forEach((track) => {
-                alert(`from accept call ${track.kind}`)
                 peerConnection.current!.addTrack(track, stream)
             })
             const answer = await peerConnection.current.createAnswer();
@@ -229,7 +242,6 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
             remoteStream.current = new MediaStream();
             peerConnection.current = createPeer(userID, type);
             stream.getTracks().forEach((track) => {
-                alert(`from make call ${track.kind}`)
                 peerConnection.current!.addTrack(track, stream)
             });
         } catch (error) {
