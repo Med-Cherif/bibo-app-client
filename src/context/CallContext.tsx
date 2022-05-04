@@ -19,12 +19,13 @@ interface CallStateContext  {
 }
 
 const CallContext = createContext({})
+//   config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }] },
 const configuration: RTCConfiguration = {
     iceServers: [
       {
         urls: [
           'stun:stun1.l.google.com:19302',
-          'stun:stun2.l.google.com:19302',
+          'stun:global.stun.twilio.com:3478?transport=udp',
         ],
       },
     ],
