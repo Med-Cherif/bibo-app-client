@@ -57,13 +57,12 @@ const ChatBox = ({ searchParams, handleClosingChat, onWriteMessageState }: IProp
         if (chat) {
             if (chat?.messages[chat?.messages?.length - 1]?.sender !== myID) {
                 handleMessage(socket).seenMessage(chat);
-
-                socket.on('seen message', ({chatID, messageID}) => {
-                    dispatch(chatActions.seenMessage({
-                        chatID, messageID
-                    }))
-                })
             }
+            socket.on('seen message', ({chatID, messageID}) => {
+                dispatch(chatActions.seenMessage({
+                    chatID, messageID
+                }))
+            })
         }
     }, [chat])
     
