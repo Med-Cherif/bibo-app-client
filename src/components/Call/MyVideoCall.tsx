@@ -58,6 +58,7 @@ const MyVideoCall = ({ myVideoRef }: IProps) => {
             onMouseLeave={endMoving}
             muted 
             autoPlay 
+            playsInline
             ref={myVideoRef} 
         />
     )

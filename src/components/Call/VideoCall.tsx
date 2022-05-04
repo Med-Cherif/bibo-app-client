@@ -83,7 +83,6 @@ const VideoCall = () => {
         
         if (remoteStream.current && remoteVideoRef.current) {
             remoteVideoRef.current.srcObject = remoteStream.current;
-            alert(remoteVideoRef.current.srcObject)
         }
         if (localStream.current && localVideoRef.current) {
             localVideoRef.current.srcObject = localStream.current;
@@ -135,7 +134,7 @@ const VideoCall = () => {
 
     return (
         <PaperStyled onMouseMove={handleCallStatus} elevation={0}>
-            <RemoteVideo autoPlay ref={remoteVideoRef} />
+            <RemoteVideo playsInline autoPlay ref={remoteVideoRef} />
             { isCallStatusVisible && (
                 <Wrapper>
                     <Stack spacing={8}>
