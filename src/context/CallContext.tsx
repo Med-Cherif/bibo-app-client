@@ -22,7 +22,7 @@ const CallContext = createContext({})
 //   config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }] },
 const configuration: RTCConfiguration = {
     iceServers: [
-        { urls: 'numb.viagenie.ca:3478' },
+        { urls: 'stun:numb.viagenie.ca:3478' },
         {
             urls: 'turn:numb.viagenie.ca',
             credential: 'muazkh',
