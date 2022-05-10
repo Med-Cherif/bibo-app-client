@@ -75,7 +75,6 @@ const authSlice = createSlice({
         },
         logout: state => {
             // i did reset the state on the store
-            localStorage.removeItem('bibotoken')
         },
     }
 })
