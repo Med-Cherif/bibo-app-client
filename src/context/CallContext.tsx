@@ -22,29 +22,14 @@ const CallContext = createContext({})
 //   config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }] },
 const configuration: RTCConfiguration = {
     iceServers: [
-      {
-        urls: [
-          'stun:stun1.l.google.com:19302',
-          'stun:global.stun.twilio.com:3478?transport=udp',
-        ],
-      },
-      {
-        urls: "turn:openrelay.metered.ca:80",
-        username: "openrelayproject",
-        credential: "openrelayproject",
-      },
-      {
-        urls: "turn:openrelay.metered.ca:443",
-        username: "openrelayproject",
-        credential: "openrelayproject",
-      },
-      {
-        urls: "turn:openrelay.metered.ca:443?transport=tcp",
-        username: "openrelayproject",
-        credential: "openrelayproject",
-      },
-    ],
-    iceCandidatePoolSize: 10,
+        {
+          urls: [
+            'stun:stun1.l.google.com:19302',
+            'stun:stun2.l.google.com:19302',
+          ],
+        },
+      ],
+      iceCandidatePoolSize: 10,
   };
 
 const CallProvider = ({ children }: { children: React.ReactNode }) => {
@@ -68,32 +53,7 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
         const peer = new RTCPeerConnection(configuration); 
         peer.ontrack = onTrackEvent;
         peer.onicecandidate = onIceCandidateEvent(userID);
-        peer.onnegotiationneeded = () => onNegotiationNeeddedEvent(userID, type);
         return peer;
-    }
-
-    async function onNegotiationNeeddedEvent(userID: string, type: 'video' | 'audio') {
-        const sdp = await peerConnection.current!.createOffer();
-        await peerConnection.current!.setLocalDescription(sdp);
-        
-        const payload = {
-            to: userID,
-            caller: {
-                _id: userData!._id,
-                name: userData!.name,
-                username: userData!.username,
-                picture: userData!.picture
-            },
-            sdp,
-            type
-        }
-
-        dispatch(callActions.callUser({
-            callType: type,
-            userID
-        }))
-
-        socket.emit('offer', payload)
     }
 
     function onTrackEvent(e: RTCTrackEvent) {
@@ -188,8 +148,8 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
             localStream.current = stream;
             remoteStream.current = new MediaStream();
             peerConnection.current = createPeer(userID, type);
-            stream.getTracks().forEach((track) => {
-                peerConnection.current!.addTrack(track, stream)
+            localStream.current.getTracks().forEach((track) => {
+                peerConnection.current!.addTrack(track, localStream.current!)
             })
             const sessionDescription = new RTCSessionDescription(sdp);
             await peerConnection.current.setRemoteDescription(sessionDescription);
@@ -241,9 +201,33 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
             localStream.current = stream;
             remoteStream.current = new MediaStream();
             peerConnection.current = createPeer(userID, type);
-            stream.getTracks().forEach((track) => {
-                peerConnection.current!.addTrack(track, stream)
+
+            localStream.current.getTracks().forEach((track) => {
+                peerConnection.current!.addTrack(track, localStream.current!)
             });
+
+            const sdp = await peerConnection.current!.createOffer();
+            await peerConnection.current!.setLocalDescription(sdp);
+            
+            const payload = {
+                to: userID,
+                caller: {
+                    _id: userData!._id,
+                    name: userData!.name,
+                    username: userData!.username,
+                    picture: userData!.picture
+                },
+                sdp,
+                type
+            }
+
+            dispatch(callActions.callUser({
+                callType: type,
+                userID
+            }))
+
+            socket.emit('offer', payload)
+
         } catch (error) {
             console.log(error);
         }
