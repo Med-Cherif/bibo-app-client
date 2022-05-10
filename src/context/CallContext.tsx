@@ -22,14 +22,10 @@ const CallContext = createContext({})
 //   config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }] },
 const configuration: RTCConfiguration = {
     iceServers: [
-        {
-          urls: [
-            'stun:stun1.l.google.com:19302',
-            'stun:stun2.l.google.com:19302',
-          ],
-        },
-      ],
-      iceCandidatePoolSize: 10,
+        { urls: 'stun:stun.l.google.com:19302' },
+        { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }
+    ],
+    iceCandidatePoolSize: 10,
   };
 
 const CallProvider = ({ children }: { children: React.ReactNode }) => {
@@ -177,7 +173,7 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
             }
             socket.emit('answer', payload)
         } catch (error) {
-            
+            alert(JSON.stringify(error))
         }    
     }
 
