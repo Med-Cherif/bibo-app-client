@@ -1,5 +1,5 @@
 import { styled } from '@mui/material';
-import React from 'react';
+import { useRef } from 'react';
 
 const MyVideo = styled('video')({
     position: 'absolute',
@@ -18,15 +18,15 @@ interface IProps {
 
 const MyVideoCall = ({ myVideoRef }: IProps) => {
 
-    let isSliding = false;
-    let xPos: number;
-    let yPos: number;
+    let isSliding = useRef(false);
+    let xPos = useRef<number>();
+    let yPos = useRef<number>();
 
     const startMoving = (e: React.MouseEvent<HTMLVideoElement, MouseEvent>) => {
         e.preventDefault()
-        isSliding = true;
-        xPos = e.clientX;
-        yPos = e.clientY;
+        isSliding.current = true;
+        xPos.current = e.clientX;
+        yPos.current = e.clientY;
     }
 
     const move = (e: React.MouseEvent<HTMLVideoElement, MouseEvent>) => {
@@ -34,10 +34,10 @@ const MyVideoCall = ({ myVideoRef }: IProps) => {
         if (isSliding) {
             
             const video = myVideoRef.current!;
-            let xPos2 = xPos - e.clientX;
-            let yPos2 = yPos - e.clientY;
-            xPos = e.clientX;
-            yPos = e.clientY;
+            let xPos2 = xPos.current! - e.clientX;
+            let yPos2 = yPos.current! - e.clientY;
+            xPos.current = e.clientX;
+            yPos.current = e.clientY;
 
 
             video.style.left = (video.offsetLeft - xPos2) + 'px';
@@ -47,7 +47,7 @@ const MyVideoCall = ({ myVideoRef }: IProps) => {
     }
 
     const endMoving = () => {
-        isSliding = false;
+        isSliding.current = false;
     }
 
     return (
