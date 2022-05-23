@@ -31,7 +31,7 @@ const MyVideoCall = ({ myVideoRef }: IProps) => {
 
     const move = (e: React.MouseEvent<HTMLVideoElement, MouseEvent>) => {
         e.preventDefault();
-        if (isSliding) {
+        if (isSliding.current) {
             
             const video = myVideoRef.current!;
             let xPos2 = xPos.current! - e.clientX;
