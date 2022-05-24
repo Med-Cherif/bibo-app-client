@@ -49,23 +49,23 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
     const localVideoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
 
-    function registerPeerConnectionListeners() {
-        peerConnection.current?.addEventListener('icegatheringstatechange', () => {
+    function registerPeerConnectionListeners(peer: RTCPeerConnection) {
+        peer.addEventListener('icegatheringstatechange', () => {
           console.log(
-              `ICE gathering state changed: ${peerConnection.current?.iceGatheringState}`);
+              `ICE gathering state changed: ${peer.iceGatheringState}`);
         });
       
-        peerConnection.current?.addEventListener('connectionstatechange', () => {
-          console.log(`Connection state change: ${peerConnection.current?.connectionState}`);
+        peer.addEventListener('connectionstatechange', () => {
+          console.log(`Connection state change: ${peer.connectionState}`);
         });
       
-        peerConnection.current?.addEventListener('signalingstatechange', () => {
-          console.log(`Signaling state change: ${peerConnection.current?.signalingState}`);
+        peer.addEventListener('signalingstatechange', () => {
+          console.log(`Signaling state change: ${peer.signalingState}`);
         });
       
-        peerConnection.current?.addEventListener('iceconnectionstatechange ', () => {
+        peer.addEventListener('iceconnectionstatechange ', () => {
           console.log(
-              `ICE connection state change: ${peerConnection.current?.iceConnectionState}`);
+              `ICE connection state change: ${peer.iceConnectionState}`);
         });
       }
     
@@ -73,7 +73,7 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
         const peer = new RTCPeerConnection(configuration); 
         peer.ontrack = onTrackEvent;
         peer.onicecandidate = onIceCandidateEvent(userID);
-        registerPeerConnectionListeners();
+        registerPeerConnectionListeners(peer);
         return peer;
     }
 
