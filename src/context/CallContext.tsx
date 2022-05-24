@@ -73,7 +73,6 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
         const peer = new RTCPeerConnection(configuration); 
         peer.ontrack = onTrackEvent;
         peer.onicecandidate = onIceCandidateEvent(userID);
-        registerPeerConnectionListeners(peer);
         return peer;
     }
 
@@ -169,6 +168,7 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
             localStream.current = stream;
             remoteStream.current = new MediaStream();
             peerConnection.current = createPeer(userID, type);
+            registerPeerConnectionListeners(peerConnection.current);
             localStream.current.getTracks().forEach((track) => {
                 peerConnection.current!.addTrack(track, localStream.current!)
             })
@@ -222,6 +222,7 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
             localStream.current = stream;
             remoteStream.current = new MediaStream();
             peerConnection.current = createPeer(userID, type);
+            registerPeerConnectionListeners(peerConnection.current);
 
             localStream.current.getTracks().forEach((track) => {
                 peerConnection.current!.addTrack(track, localStream.current!)
