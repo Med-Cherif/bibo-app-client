@@ -48,11 +48,32 @@ const CallProvider = ({ children }: { children: React.ReactNode }) => {
     const remoteStream = useRef<MediaStream>();
     const localVideoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
+
+    function registerPeerConnectionListeners() {
+        peerConnection.current?.addEventListener('icegatheringstatechange', () => {
+          console.log(
+              `ICE gathering state changed: ${peerConnection.current?.iceGatheringState}`);
+        });
+      
+        peerConnection.current?.addEventListener('connectionstatechange', () => {
+          console.log(`Connection state change: ${peerConnection.current?.connectionState}`);
+        });
+      
+        peerConnection.current?.addEventListener('signalingstatechange', () => {
+          console.log(`Signaling state change: ${peerConnection.current?.signalingState}`);
+        });
+      
+        peerConnection.current?.addEventListener('iceconnectionstatechange ', () => {
+          console.log(
+              `ICE connection state change: ${peerConnection.current?.iceConnectionState}`);
+        });
+      }
     
     function createPeer(userID: string, type: 'audio' | 'video') {
         const peer = new RTCPeerConnection(configuration); 
         peer.ontrack = onTrackEvent;
         peer.onicecandidate = onIceCandidateEvent(userID);
+        registerPeerConnectionListeners();
         return peer;
     }
 
