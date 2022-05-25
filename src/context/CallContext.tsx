@@ -23,7 +23,7 @@ const CallContext = createContext({})
 const configuration: RTCConfiguration = {
     iceServers: [
         {
-          urls: "stun:openrelay.metered.ca:80",
+          urls: "stun:stun.l.google.com:19302",
         },
         {
           urls: "turn:openrelay.metered.ca:80",
