@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutAction } from '../../redux/actions/authAction';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { useGlobalState } from '../../context/AppContext';
 
 const options = [
     { id: 2, icon: <SettingsIcon />, title: 'Settings', to: "/settings" },
@@ -55,13 +56,14 @@ const Sidebar = ({ isFullHeight }: IProps) => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const { socket } = useGlobalState()
 
     const [isSidebarOpen, setIsSidebaropen] = useState(false)
 
     const toggleSidebar = () => setIsSidebaropen(prev => !prev)
 
     const logout = () => {
-        dispatch(logoutAction(navigate))
+        dispatch(logoutAction(socket, navigate))
     }
 
     return (

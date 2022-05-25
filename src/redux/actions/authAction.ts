@@ -2,6 +2,7 @@ import { actions } from "../slices/authSlice";
 import * as api from "../../api/authApi";
 import { AppDispatch } from "../store";
 import { NavigateFunction } from "react-router-dom";
+import { Socket } from "socket.io-client";
 
 const errorHandling = (error: any) => {
     return error?.response?.data?.message || error.message
@@ -39,7 +40,8 @@ export const signinAction = (signinData: api.SigninData, naviagte: NavigateFunct
     }
 }
 
-export const logoutAction = (naviagte: NavigateFunction) => async (dispatch: AppDispatch) => {
+export const logoutAction = (socket: Socket, naviagte: NavigateFunction) => async (dispatch: AppDispatch) => {
     dispatch(actions.logout())
+    socket.emit('logout')
     naviagte('/login', { replace: true })
 }
