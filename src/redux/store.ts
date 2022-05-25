@@ -17,7 +17,6 @@ const appReducer = combineReducers({
 
 const rootReducer = (state: ReturnType<typeof appReducer>, action: AnyAction) => {
     if (action.type === 'auth/logout') {
-        localStorage.removeItem('bibotoken');
         return appReducer(undefined, action)
     }
     if (action.type === 'reset comments') {

@@ -41,7 +41,7 @@ export const getUserData = (id: string) => async (dispatch: AppDispatch, getStat
         const { _id, username, name, picture, followings, followers, description } = data.user
         dispatch(actions.getUserData({_id, username, name, picture, followings, followers, description: description ? description : 'No Bio'}))
 
-        const { data: postsData } = await getUserPosts(id,`Bearer ${accessToken!}`)
+        const { data: postsData } = await getUserPosts(id, accessToken!)
         dispatch(postActions.getUserPosts(postsData.posts))
         
     } catch (error) {

@@ -73,10 +73,14 @@ const authSlice = createSlice({
             state.refreshToken = refreshToken
             state.userData = jwtDecode(accessToken)
         },
-        logout: state => {
-            // i did reset the state on the store
+        logout: (state) => {
+            state.accessToken = null;
+            state.refreshToken = null;
+            state.loading = { isLoading: false, type: '' };
+            state.error = { type: "", message: null }
+            localStorage.removeItem('bibotoken');
         },
-    }
+    },
 })
 
 export const actions = authSlice.actions

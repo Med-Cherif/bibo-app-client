@@ -19,17 +19,28 @@ interface CallStateContext  {
 }
 
 const CallContext = createContext({})
-//   config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }] },
+
 const configuration: RTCConfiguration = {
     iceServers: [
-        { urls: 'stun:numb.viagenie.ca:3478' },
         {
-            urls: 'turn:numb.viagenie.ca',
-            credential: 'muazkh',
-            username: 'webrtc@live.com'   
+          urls: "stun:openrelay.metered.ca:80",
         },
-    ],
-    iceCandidatePoolSize: 10,
+        {
+          urls: "turn:openrelay.metered.ca:80",
+          username: "openrelayproject",
+          credential: "openrelayproject",
+        },
+        {
+          urls: "turn:openrelay.metered.ca:443",
+          username: "openrelayproject",
+          credential: "openrelayproject",
+        },
+        {
+          urls: "turn:openrelay.metered.ca:443?transport=tcp",
+          username: "openrelayproject",
+          credential: "openrelayproject",
+        },
+      ],
   };
 
 const CallProvider = ({ children }: { children: React.ReactNode }) => {
