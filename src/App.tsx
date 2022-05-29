@@ -15,8 +15,6 @@ import PostScreen from "./screens/PostScreen";
 import NotificationsScreen from "./screens/NotificationsScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import AuthError from "./components/public/AuthError";
-import CallProvider from "./context/CallContext";
-import Call from "./components/Call/Call";
 import Warning from "./components/Warning";
 import { useState } from "react";
 
@@ -31,7 +29,6 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <CallProvider>
           <Routes>
             <Route path="/" element={<RequiredAuth>
               <ScreenContainer>
@@ -101,8 +98,7 @@ function App() {
           </Routes>
           <NotificationsSnackbar />
           <AuthError /> 
-          <Call />
-        </CallProvider>
+        
         {
           warningVisible && <Warning warningVisible={warningVisible} hideWarning={hideWarning} />
         }

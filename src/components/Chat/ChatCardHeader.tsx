@@ -7,7 +7,6 @@ import { RootState } from "../../redux/store";
 import {actions as chatActions} from "../../redux/slices/chatSlice";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom"
-import { useCallState } from "../../context/CallContext"
 import API_URL from "../../config"
 
 interface IProps {
@@ -15,28 +14,12 @@ interface IProps {
 };
 
 const ChatCardHeader = ({ handleClosingChat }: IProps) => {
-    const { makeCall } = useCallState()
     const dispatch = useDispatch()
     const { chat } = useSelector((state: RootState) => state.chat)
     const navigate = useNavigate()
 
     const resetChat = () => {
         dispatch(chatActions.resetChat())
-    }
-
-
-    const callVideo = () => {
-        const userID = chat?.user?._id
-        if (userID) {
-            makeCall(userID, 'video');
-        }
-    }
-
-    const callVoice = () => {
-        const userID = chat?.user?._id
-        if (userID) {
-            makeCall(userID, 'audio');
-        }
     }
 
     return (
@@ -54,12 +37,6 @@ const ChatCardHeader = ({ handleClosingChat }: IProps) => {
                 <>
                     <IconButton onClick={() => handleClosingChat(resetChat)} sx={{ display: { xs: 'inline-flex', md: 'none' } }} aria-label="back">
                         <ArrowBackIcon color="primary" />
-                    </IconButton>
-                    <IconButton onClick={callVoice} aria-label="voice-call">
-                        <CallIcon color='primary' />
-                    </IconButton>
-                    <IconButton onClick={callVideo} aria-label="video-call">
-                        <VideoCallIcon color='primary' />
                     </IconButton>
                     <IconButton aria-label="settings">
                         <MoreVertIcon />
