@@ -9,7 +9,7 @@ interface IProps {
     searchValue: string;
 }
 
-const PaperStyled = styled(Paper)(({ theme }) => ({
+const PaperStyled = styled(Paper)(({}) => ({
     position: "absolute",
     top: '51.5px',
     left: '50%',
