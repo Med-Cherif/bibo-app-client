@@ -8,6 +8,6 @@ export const getNotificationAction = () => async (dispatch: AppDispatch, getStat
         const { data } = await apis.getNotification(auth.userData!._id, auth.accessToken!)
         dispatch(actions.getNotifications(data.notifications))
     } catch (error) {
-        console.log(error)
+        return;
     }
 }

@@ -32,7 +32,7 @@ export const getChatsAction = () => async (dispatch: AppDispatch, getState: () =
         })
         dispatch(actions.getChats(result))
     } catch (error) {
-        console.log(error)
+        
     }
 }
 
@@ -40,7 +40,7 @@ export const handleChat = (socket: Socket, dispatch?: Dispatch) => {
     return {
         emitting: ({starterId, userId}: {starterId: string, userId: string}) => socket.emit('start chat', { starterId, userId }, ({ error }: any) => {
             if (error) {
-                console.log(error)
+                return;
             }
         }),
 
@@ -81,7 +81,7 @@ export const handleMessage = (socket: Socket, dispatch?: Dispatch) => {
     return {
         emitting: ({ senderId, toId, content, chatId }: { senderId: string, toId: string | null, content: string, chatId: string | null }) => (
             socket.emit('send message', { senderId, toId, content, chatId }, ({ error }: any) => {
-                console.log(error)
+                return;
             })
         ),
         listeningExixtsChat: (handleScrollChat: () => void) => (

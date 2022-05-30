@@ -6,7 +6,6 @@ import { NavigateFunction } from "react-router-dom";
 
 const handleErrors = (err: any) => {
     const message = err?.response?.data?.message || err?.message
-    console.log(message);
     return message
 }
 

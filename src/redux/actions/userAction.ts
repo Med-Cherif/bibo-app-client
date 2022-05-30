@@ -10,7 +10,6 @@ import { Dispatch } from "redux"
 
 const handleErrors = (err: any) => {
     const error = err?.response?.data?.message || err?.message
-    console.log(error)
     return error
 }
 
@@ -66,7 +65,6 @@ export const followUser = (socket: Socket, dispatch?: Dispatch) => {
             message: string;
             open: boolean;
         }>>) => socket.on('get followed', (notification) => {
-            console.log(notification)
             if (dispatch) {
                 dispatch(notificationActions.getNotification(notification))
             }
@@ -142,7 +140,6 @@ export const getUserContactAction = (userId: string, type: "followings" | "follo
     const accessToken = auth.accessToken!;
     try {
         const { data } = await apis.getUserContact(userId, type, accessToken);
-        console.log(data)
         dispatch(actions.getUserContact({
             type: data.type,
             [data.type]: data[data.type]
