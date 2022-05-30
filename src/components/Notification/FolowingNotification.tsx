@@ -1,6 +1,5 @@
-import { ListItem, ListItemAvatar, Avatar, ListItemText } from "@mui/material"
+import { ListItem } from "@mui/material"
 import { useNavigate } from "react-router-dom";
-import API_URL from "../../config";
 import NotificationAvatarText from "./NotificationAvatarText";
 
 interface IProps {

@@ -1,6 +1,4 @@
-import { ListItem, ListItemAvatar, Avatar, ListItemText } from "@mui/material";
 import { NotificationType } from "../../redux/slices/notificationSlice";
-import API_URL from "../../config"
 import LikingPostNotification from "./LikingPostNotification";
 import FolowingNotification from "./FolowingNotification";
 

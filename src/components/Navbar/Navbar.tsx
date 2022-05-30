@@ -6,6 +6,7 @@ import SearchBox from './SearchBox';
 import SearchIcon from '@mui/icons-material/Search';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import API_URL from "../../config";
 
 const LinkStyled = styled(Link)({
     color: '#fff',
@@ -17,8 +18,6 @@ const ToolbarStyled = styled(Toolbar)(({ theme }) => ({
     gap: '20px',
     height: '64px',
 }))
-
-const server = process.env.REACT_APP_API_URL!;
 
 const Navbar = ({ hideNotificationBar, hideSearchbar }: { hideNotificationBar?: boolean, hideSearchbar?: boolean }) => {
 
@@ -61,7 +60,7 @@ const Navbar = ({ hideNotificationBar, hideSearchbar }: { hideNotificationBar?: 
                         <Link to={`/profile/${userData?._id}`}>
                             <Avatar
                                 alt="Profile"
-                                src={`${server}/${userData!.picture}`}
+                                src={`${API_URL}/${userData!.picture}`}
                             />
                         </Link>
                     </Box>

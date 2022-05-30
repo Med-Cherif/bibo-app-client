@@ -5,6 +5,7 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { createPostAction } from "../../redux/actions/postAction";
+import API_URL from "../../config"
 
 const PaperStyled = styled(Paper)(({
     width: '100%',
@@ -82,7 +83,7 @@ const ModelCreatorPost = () => {
                 <Card sx={{ boxShadow: 'none' }}>
                     <CardHeader
                         avatar={
-                            <Avatar alt="Mohamed cherif" src={`${process.env.REACT_APP_API_URL}/${userData!.picture}`} />
+                            <Avatar alt="Mohamed cherif" src={`${API_URL}/${userData!.picture}`} />
                         }
                         title={userData!.username}
                         subheader={userData!.name}

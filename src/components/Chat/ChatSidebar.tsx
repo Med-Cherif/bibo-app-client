@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { Box, styled, Divider, InputBase, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Box, styled, Divider, InputBase } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import ChatSidebarBody from "./ChatSidebarBody";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
 const BoxStyled = styled(Box)({

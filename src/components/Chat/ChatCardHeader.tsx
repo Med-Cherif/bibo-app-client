@@ -1,6 +1,4 @@
 import { CardHeader, IconButton, Avatar } from "@mui/material"
-import CallIcon from "@mui/icons-material/Call"
-import VideoCallIcon from "@mui/icons-material/VideoCall"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../redux/store";

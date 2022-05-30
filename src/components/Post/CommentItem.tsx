@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { RootState } from '../../redux/store';
 import { calculateTime } from "../../utils/time"
 import { Comment } from "../../redux/slices/postSlice";
-import { useGlobalState } from '../../context/AppContext';
 import { deleteCommentAction } from '../../redux/actions/postAction';
 
 interface IProps extends Comment {

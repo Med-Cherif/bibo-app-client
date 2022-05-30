@@ -1,7 +1,5 @@
 import { Box, styled, List, ListItemAvatar, ListItemButton, ListItem, Typography, Avatar, ListItemText } from "@mui/material"
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../../redux/store"
-import { useNavigate, useSearchParams } from "react-router-dom"
+import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { getChatsAction } from "../../redux/actions/chatAction"
 import API_URL from "../../config"

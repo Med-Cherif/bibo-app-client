@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Typography, Button, styled, Grid, Container, Alert, Avatar } from "@mui/material";
 import SettingField from "../components/Setting/SettingField";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { changeProfilePictureAction, updateUserPasswordAction } from "../redux/actions/userAction";
+import API_URL from "../config";
 
 const ContainerStyled = styled(Container)(() => ({
     background: '#ccc',
@@ -35,8 +36,6 @@ const AvatarBox = styled('div')({
 })
 
 // currentPassword, newPassword, newConfirmingPassword
-
-const server = process.env.REACT_APP_API_URL!;
 
 const SettingsScreen = () => {
 
@@ -87,7 +86,7 @@ const SettingsScreen = () => {
                         accept="image/*"
                     />
                     <AvatarBox>
-                        <Avatar sx={{ width: '100%', height: '100%' }} src={`${server}/${userData!.picture}`} />
+                        <Avatar sx={{ width: '100%', height: '100%' }} src={`${API_URL}/${userData!.picture}`} />
                     </AvatarBox>
                 </ProfileImageSettingContainer>
                 <GridContainer mb={2} container spacing={2}>
