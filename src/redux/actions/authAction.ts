@@ -15,7 +15,6 @@ export const signupAction = (signupData: api.SignupData, naviagte: NavigateFunct
         dispatch(actions.authSuccess({ accessToken: data.accessToken, refreshToken: data.refreshToken }))
         naviagte('/', { replace: true })
     } catch (err) {
-        alert(JSON.stringify(err))
         dispatch(actions.error({
             type: "auth-error",
             message: errorHandling(err),

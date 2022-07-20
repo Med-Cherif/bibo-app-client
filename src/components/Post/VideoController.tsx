@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styled, Stack, Slider, Typography, Box } from "@mui/material"
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
@@ -67,16 +67,14 @@ const VideoController = ({ videoRef, newCurrentTime, setNewCurrentTime, toggleFu
     const [volume, setVolume] = useState(video.volume * 100);
 
     function formatDuration(value: number) {
-        // 3950
-
-        const hours = Math.floor(value / 3600); // 1 - 350
-        const minute = Math.floor((value - hours * 3600) / 60); // 5 - 50
-        const secondLeft = Math.floor(value - (minute * 60 + hours * 3600)); // 50
+        const hours = Math.floor(value / 3600);
+        const minute = Math.floor((value - hours * 3600) / 60);
+        const secondLeft = Math.floor(value - (minute * 60 + hours * 3600));
 
         return `${minute}:${secondLeft <= 9 ? `0${secondLeft}` : secondLeft}`;
       }
 
-    const onVolumeChagne = (e: any, value: number | number[], _: any) => {
+    const onVolumeChange = (e: any, value: number | number[], _: any) => {
 
         if (typeof value === "number") {
             video.volume = value / 100
@@ -103,11 +101,11 @@ const VideoController = ({ videoRef, newCurrentTime, setNewCurrentTime, toggleFu
                         aria-label="Time"
                         step={0.2}
                         value={newCurrentTime}
-                        max={video.duration}
+                        max={video.duration - 1}
                         onChange={(x: any, value: number | number[], y: any) => {
                             if (typeof value === "number") {
                                 video.currentTime = value;
-                                setNewCurrentTime(Math.floor(value));
+                                setNewCurrentTime(Math.floor(value + 1));
                             }
                         }}
                     />
@@ -137,7 +135,7 @@ const VideoController = ({ videoRef, newCurrentTime, setNewCurrentTime, toggleFu
                     }}
                     max={100}
                     min={0}
-                    onChange={onVolumeChagne} 
+                    onChange={onVolumeChange} 
                 />
                 <VolumeUp />
 

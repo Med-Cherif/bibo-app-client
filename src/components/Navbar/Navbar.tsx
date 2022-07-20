@@ -37,6 +37,8 @@ const Navbar = ({ hideNotificationBar, hideSearchbar }: { hideNotificationBar?: 
         }
     }
 
+    console.log(userData!.picture);
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed" sx={{ boxShadow: "none" }}>
