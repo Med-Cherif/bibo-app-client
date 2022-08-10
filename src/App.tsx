@@ -15,16 +15,8 @@ import PostScreen from "./screens/PostScreen";
 import NotificationsScreen from "./screens/NotificationsScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import AuthError from "./components/public/AuthError";
-import Warning from "./components/Warning";
-import { useState } from "react";
 
 function App() {
-
-  const [warningVisible, setWarningVisible] = useState(true);
-
-  const hideWarning = () => {
-    setWarningVisible(false);
-  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -98,11 +90,6 @@ function App() {
           </Routes>
           <NotificationsSnackbar />
           <AuthError /> 
-        
-        {
-          warningVisible && <Warning warningVisible={warningVisible} hideWarning={hideWarning} />
-        }
-        
       </div>
     </ThemeProvider>
   );
